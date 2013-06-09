@@ -11,9 +11,9 @@ except socket.error:
 
 s.connect((HOST, PORT))
 
-filename = raw_input('list or get <filename>: ')
-s.sendall(filename)
-data = s.recv(1024)
-s.close()
-print 'Received', repr(data)
+while 1:
+    filename = raw_input('list or get <filename>: ')
+    s.sendall(filename)
+    data = s.recv(1024)
+
 

@@ -17,17 +17,23 @@ conn, addr = s.accept()
 
 print 'Connect by', addr
 
-#if data.get(0) == 'list' and data.length == 1
-#if data.get(0) == 'get' and data.length == 2
-
 while 1:
     data = conn.recv(1024)
+    data = data.split()
     if not data: break
-    elif data == 'list':
+    elif data[0] and len(data) == 1:
         files = [f for f in os.listdir('.') if os.path.isfile(f)]
         for f in files:
             print f
-    elif data == 'get'
-        print 'Invalid Command'
+    elif data[0] == 'get' and len(data) == 2:
+        files = [f for f in os.listdir('.') if os.path.isfile(f)]
+        for f in files:
+            if data[1] == f:
+                print "Transferring"
+                open_file = open(data[1],'wb')
+                break
+            else:
+                print "File not found"
+    else:
+        print "Invalid Command"
 
-conn.close()
