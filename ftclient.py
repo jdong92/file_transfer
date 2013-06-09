@@ -16,7 +16,14 @@ while 1:
     s.sendall(filename)
     data = s.recv(1024)
     if not data: break
+    elif data == "File":
+        f = open("Test.py", 'wb')
+        while (True):
+            l = s.recv(1024)
+            while (1):
+                f.write(l)
+                l = s.recv(1024)
+        f.close()
+
     else:
         print data
-
-
