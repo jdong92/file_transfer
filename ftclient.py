@@ -15,5 +15,8 @@ while 1:
     filename = raw_input('list or get <filename>: ')
     s.sendall(filename)
     data = s.recv(1024)
+    if not data: break
+    else:
+        print data
 
 
