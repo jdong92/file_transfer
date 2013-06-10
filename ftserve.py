@@ -18,12 +18,13 @@ conn, addr = sock.accept()
 print 'Connect by', addr
 
 while 1:
+    match = 0
     data = conn.recv(4096)
     data = data.split()
     if not data: break
     elif data[0] == 'list' and len(data) == 1:
         files = [f for f in os.listdir('.') if os.path.isfile(f)]
-        conn.send('List'+str(files))
+        conn.send("/f"+str(files))
     elif data[0] == 'get' and len(data) == 2:
         files = [f for f in os.listdir('.') if os.path.isfile(f)]
         for f in files:
@@ -31,10 +32,11 @@ while 1:
                 open_file = open(data[1],'rb')
                 send_file = open_file.read()
                 open_file.close()
-                conn.send(send_file)
-                break
-            else:
-                conn.send("File not found\n")
+                #conn.send("SEND " + data[1])
+                conn.send("/g"+data[1]+"/\n"+send_file)
+                match = 1
+        if match == 0:
+            conn.send("/eFile Not Found\n")
     else:
-        conn.send("Invalid Command\n")
+        conn.send("/iInvalid Command\n")
 
